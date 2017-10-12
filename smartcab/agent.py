@@ -46,11 +46,13 @@ class LearningAgent(Agent):
             self.alpha = 0
             self.epsilon = 0
         else:
+
+            self.epsilon = math.fabs(math.sin(self.alpha*self.t))
+            self.t += 1.0
+
             #self.epsilon = self.epsilon - 0.05
             #self.epsilon = 1 /(0.999 * self.t)
             #self.epsilon = math.fabs(math.cos(self.alpha*self.t))
-            self.epsilon = math.fabs(math.sin(self.alpha*self.t))
-            self.t += 1.0
             #self.epsilon = 1 / ((self.alpha)**self.t)
             #self.epslion = 1 / self.t**2
             #self.epsilon = math.e**(self.alpha*self.t)
@@ -100,7 +102,7 @@ class LearningAgent(Agent):
         ###########
         # Calculate the maximum Q-value of all actions for a given state
 
-        maxQ = -1000.00
+        maxQ = -1.00
 
         for action in self.Q[state]:
             if maxQ < self.Q[state][action]:
@@ -173,7 +175,7 @@ class LearningAgent(Agent):
         if self.learning:
             #self.Q[state][action] = (1-self.alpha)*old_value + self.alpha*(reward)
             self.Q[state][action] = old_value + (self.alpha*(reward-old_value))
-            #self.Q[state][action] = self.Q[state][action] + (self.alpha*(reward-self.get_maxQ(state)))
+            #self.Q[state][action] = old_value + (self.alpha*(reward-self.get_maxQ(state)))
 
         return
 
