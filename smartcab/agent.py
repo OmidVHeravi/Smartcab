@@ -24,7 +24,7 @@ class LearningAgent(Agent):
         ###########
         # Set any additional class parameters as needed
         self.t = 0.00
-        random.seed(47)
+        random.seed(48)
 
 
     def reset(self, destination=None, testing=False):
@@ -47,12 +47,12 @@ class LearningAgent(Agent):
             self.epsilon = 0
         else:
 
-            self.epsilon = math.fabs(math.sin(self.alpha*self.t))
+            #self.epsilon = math.fabs(math.sin(self.alpha*self.t))
             self.t += 1.0
 
             #self.epsilon = self.epsilon - 0.05
             #self.epsilon = 1 /(0.999 * self.t)
-            #self.epsilon = math.fabs(math.cos(self.alpha*self.t))
+            self.epsilon = math.fabs(math.cos(self.alpha*self.t))
             #self.epsilon = 1 / ((self.alpha)**self.t)
             #self.epslion = 1 / self.t**2
             #self.epsilon = math.e**(self.alpha*self.t)
@@ -80,15 +80,7 @@ class LearningAgent(Agent):
         # constraints in order for you to learn how to adjust epsilon and alpha, and thus learn about the balance between exploration and exploitation.
         # With the hand-engineered features, this learning process gets entirely negated.
 
-        def xstr(s):
-            if s is None:
-                return 'None'
-            else:
-                return str(s)
-
         # Set 'state' as a tuple of relevant data for the agent
-        #state = (waypoint, inputs['light'], deadline)
-        #state = xstr(waypoint) + "_" + inputs['light'] + "_" + inputs['left'] + "_" +  inputs['oncoming']
         state = (waypoint, inputs['light'], inputs['left'], inputs['oncoming'])
         return state
 
@@ -102,12 +94,7 @@ class LearningAgent(Agent):
         ###########
         # Calculate the maximum Q-value of all actions for a given state
 
-        maxQ = -1.00
-
-        for action in self.Q[state]:
-            if maxQ < self.Q[state][action]:
-                maxQ = self.Q[state][action]
-
+        maxQ = max(self.Q[state].values())
         return maxQ
 
 
