@@ -134,7 +134,7 @@ class LearningAgent(Agent):
         if not self.learning:
             action = random.choice(self.valid_actions)
         else:
-            if self.epsilon > random.Random():
+            if self.epsilon > random.random():
                 action = random.choice(self.valid_actions)
             else:
                 valid_acts= []
